@@ -12,104 +12,87 @@
 var myCounter = 0
 
 function myOpen(obj){
-  function surov(url){    
+  function surov(url){
     let result=0
-    
+
     fetch(url).then(function (response) {
       return response.text();
     }).then(function (html) {
       let doc = new DOMParser().parseFromString(html, "text/html")
-      
+
       let cont = doc.body.querySelector('#attendance-grid').children[1].children
-  
-      //console.log(cont)
+
       let cc=0
       for(let i of cont){
         let sub_url = i.querySelector('.nav').children[1].children[0].href
-        
-        //console.log(sub_url)
-        
-        
+
         fetch(sub_url).then(function (response) {
             return response.text();
         }).then(function (html) {
-            
+
             let sub_doc = new DOMParser().parseFromString(html, "text/html")
-            //console.log(sub_doc)
             let sub_cont = sub_doc.body.querySelector('#attendance-grid').children[1]
-            //console.log(sub_cont.querySelector('.col-md-8').children[0].querySelectorAll('.panel'))
             let list = sub_cont.querySelector('.col-md-8').children[0].querySelectorAll('.panel')
-            //console.log(list)
-          
+
             for(let i of list){
               let sub_list = i.querySelector('.timeline').children
-              
-              //console.log(sub_list)
-              
+
               for(let j=0; j<sub_list.length-1; j+=2){
                 let sana = sub_list[j].children[0]
                 let check = sub_list[j+1].children[0]
-                
-                if(sana.className=="bg-green" && !check.className.includes("fa-check")) {
-                  let fan = sub_list[j+1].querySelector('.timeline-body').innerText.split('\n')[1]
-                  //console.log(sub_list[j+1].querySelector('.timeline-body').innerText.split('\n')[1])
-                  let nomi = sub_list[j+1].querySelector('.timeline-body').children[0].innerText
-                  let href = sub_list[j+1].querySelector('.text-right').children[0].href
+                // 1 || ni olib tashlasa faqat ochiqlari ko'rinadi
+                if(1 || sana.className=="bg-green" && !check.className.includes("fa-check")) {
+                  let fan = ""
+                  let nomi = ""
+                  let href = ""
 
-                  //let ful_info = sana.innerText + ' ' + fan + ' ' + nomi
-                  //ful_info=ful_info.split('\n').join(' ')
-                  //console.log(ful_info)
-                  
-                  //let a = document.createElement('a')
-                  
-                  //a.href = href
-                  //a.innerText = ful_info
+                  fan  = sub_list[j+1].querySelector('.timeline-body').innerText.split('\n')[1]
+                  fan = fan.trim().split(" ")
+                  fan.shift()
+                  fan = fan.join(" ")
 
-                  //let br = document.createElement('br')
-                  
-                  //console.log(a)
-                  //obj.appendChild(a)
-                  //obj.appendChild(br)
-                  
+                  nomi = sub_list[j+1].querySelector('.timeline-body').children[0].innerText
+                  try{
+                    href = sub_list[j+1].querySelector('.text-right').children[0].href
+                  }catch{}
+
                   let tr = document.createElement('tr')
-                  tr.innerHTML = `<td>`+(myCounter++)+`</td><td>`+sana.innerText+`</td><td>`+fan+`</td><td><a href="`+href+`">`+nomi+`</a></td>`
+                  tr.innerHTML = `
+                    <td>${(myCounter++)}</td>
+                    <td align="center">${sana.innerText}</td>
+                    <td style="max-width: 200px;">${fan}</td>
+                    <td style="max-width: 200px;"><a href="${href}">${nomi}</a></td>`
                   obj.appendChild(tr)
-                  /*<!-- 
-                   * <tr>
-                      <td>1</td>
-                      <td>31.03.2013 06:12</td>
-                      <td>gold</td>
-                      <td>A</td>
-                    </tr> 
-                  -->
-                  */
-                  
-                  //mySortFunc(document.querySelector("#my-date1"))
                 }
               }
             }
-            
+
         }).catch(function (err) {
           console.warn('Something went wrong.', err);
         })
-      }            
+      }
     }).catch(function (err) {
       console.warn('Something went wrong.', err);
     })
   }
 
   let url = 'https://student.jbnuu.uz/education/subjects'
-  
-  
+
+
   surov(url)
 }
 
-function view(){
+function topshriqlar(){
   if('https://student.jbnuu.uz/'==document.URL){
     console.log('ishladi')
-    
-    let cont = document.querySelector('#attendance-grid').children[1].querySelector('.col-md-12').querySelector('.row').querySelector('.col-md-5')
-    
+
+    let cont = document
+      .querySelector('#attendance-grid')
+      .children[1]
+      .querySelector('.col-md-12')
+      .querySelector('.row')
+      .querySelector('.col-md-5')
+
     let html = `
       <div class="box box-widget">
         <div class="box-header with-border">
@@ -118,41 +101,184 @@ function view(){
 
         <div class="box-footer box-comments">
           <div class="box-comment" id="Eslatma">
-            <table id="my-table" border="1">
-            <thead >
-              <tr>
-                <th data-key="id" data-column="0" data-order="asc"><p align="center">id</p></th>
-                <th id="my-date1" data-key="date" data-column="1" data-order="asc">
-                  <p align="center">date</p>
-                </th>
-                <th data-key="fan" data-column="2" data-order="asc"><p align="center">fan</p></th>
-                <th data-key="modul" data-column="3" data-order="asc"><p align="center">topshiriq</p></th>
-              </tr>
-            </thead>
-            <tbody id="my-tbody">
-              <!-- satirlar shu yerdan qo'shiladi -->
-              <!-- <tr>
-                <td>1</td>
-                <td>31.03.2013 06:12</td>
-                <td>gold</td>
-                <td>A</td>
-              </tr> -->
+            <table width="100%" id="my-table" border="1">
+              <thead >
+                <tr>
+                  <th data-key="id"    data-column="0" data-order="asc"><p align="center">id</p></th>
+                  <th data-key="date"  data-column="1" data-order="asc" id="my-date1"><p align="center">date</p></th>
+                  <th data-key="fan"   data-column="2" data-order="asc"><p align="center">fan</p></th>
+                  <th data-key="modul" data-column="3" data-order="asc"><p align="center">topshiriq</p></th>
+                </tr>
+              </thead>
+              <tbody id="my-tbody"></tbody>
+              <style>
+                #my-table tr td{
+/*                   max-width: 80px; */
+                  padding: 0 6px;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                }
+              </style>
             </table>
           </div>
         </div>
-      </div>
-
-<!--       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
-    `
+      </div>`
     myJq()
-    
+
     let myHtml = new DOMParser().parseFromString(html, "text/html")
-  
+
     let mydiv = myHtml.querySelector('div')
 
     cont.appendChild(mydiv)
-    
-    myOpen(document.querySelector('#my-tbody'))
+
+    myOpen(document.querySelector("#my-table").querySelector('#my-tbody'))
+  }
+}
+
+function myOpen2(obj){
+  function surov(url){
+    let result=0
+
+    fetch(url).then(function (response) {
+      return response.text();
+    }).then(function (html) {
+      let doc = new DOMParser().parseFromString(html, "text/html")
+      //widget-user-username
+      let cont = doc.body.querySelector('#attendance-grid').children[1].children
+
+      let cc=0
+      for(let i of cont){
+        let sub_url = i.querySelector('.nav').children[1].children[0].href
+        let fan_nomi = i.querySelector(".widget-user-username").innerText
+
+        let tr = document.createElement('tr')
+
+        tr.innerHTML = `
+          <td>${(cc++)}</td>
+          <td>${fan_nomi}</td>
+          <td align="center">0.0/0</td>
+          <td align="center">0.0/0</td>
+          <td align="center">0.0/0</td>`
+        // 2, 3, 4
+        obj.appendChild(tr)
+
+        // continue
+        fetch(sub_url).then(function (response) {
+            return response.text();
+        }).then(function (html) {
+
+            let sub_doc = new DOMParser().parseFromString(html, "text/html")
+            let sub_cont = sub_doc.body.querySelector('#attendance-grid').children[1]
+            let list = sub_cont.querySelector('.col-md-8').children[0].querySelectorAll('.panel')
+
+            for(let i of list){
+              let sub_list = i.querySelector('.timeline').children
+
+              for(let j=0; j<sub_list.length-1; j+=2){
+                let title = sub_list[j+1].querySelector(".timeline-header").innerText
+                let ball = sub_list[j+1].querySelector(".timeline-item").querySelector(".time").innerText.replace(/\s/gm, '')
+
+                let tuplagan = ball.split("/")[0]
+                tuplagan = parseFloat(tuplagan)
+
+                let kerek = ball.split("/")[1]
+
+                kerek = kerek.replace("/","")
+                kerek = kerek.replace(" ","")
+                kerek = parseInt(kerek)
+
+                let fan_nomi_ = sub_list[j+1].querySelector('.timeline-body').innerText.split('\n')[1]
+                fan_nomi_ = fan_nomi_.trim().split(" ")
+                fan_nomi_.shift()
+                fan_nomi_ = fan_nomi_.join(" ")
+
+                let fan_nomi__ = document.querySelector("#my-table2").querySelectorAll(`tr`)
+
+                for(let trs of fan_nomi__){
+                  if(trs.children[1].innerText == fan_nomi_){
+                    let tds = tr.children
+                    if(title.includes("Amaliy") || title.includes("Seminar")){
+                      let amaliy = tds[2].innerText.split("/")
+                      tds[2].innerText = parseFloat(amaliy[0])+tuplagan+"/"+(parseInt(amaliy[1]) + kerek)
+                    }else if(title.includes("Ma’ruza")){
+                      let maruza = tds[3].innerText.split("/")
+                      tds[3].innerText = parseFloat(maruza[0])+tuplagan+"/"+(parseInt(maruza[1]) + kerek)
+                    }
+
+                    let jami = tds[4].innerText.split("/")
+                    tds[4].innerText = parseFloat(jami[0])+tuplagan+"/"+(parseInt(jami[1]) + kerek)
+                  }
+                }
+              }
+            }
+
+        }).catch(function (err) {
+          console.warn('Something went wrong.', err);
+        })
+      }
+    }).catch(function (err) {
+      console.warn('Something went wrong.', err);
+    })
+  }
+
+  let url = 'https://student.jbnuu.uz/education/subjects'
+
+
+  surov(url)
+}
+
+function ballar(){
+  if('https://student.jbnuu.uz/'==document.URL){
+    console.log('ishladi')
+
+    let cont = document
+      .querySelector('#attendance-grid')
+      .children[1]
+      .querySelector('.col-md-12')
+      .querySelector('.row')
+      .querySelector('.col-md-5')
+
+    let html = `
+      <div class="box box-widget">
+        <div class="box-header with-border">
+          <h3 class="box-title">Ballar</h3>
+        </div>
+
+        <div class="box-footer box-comments">
+          <div class="box-comment" id="Eslatma">
+            <table width="100%" id="my-table2" border="1">
+              <thead >
+                <tr>
+                  <th data-key="id"     data-column="0" data-order="asc"><p align="center">id</p></th>
+                  <th data-key="fan"    data-column="1" data-order="asc"><p align="center">fan</p></th>
+                  <th data-key="amaliy" data-column="2" data-order="asc"><p align="center">amaliy</p></th>
+                  <th data-key="maruza" data-column="3" data-order="asc"><p align="center">maruza</p></th>
+                  <th data-key="Jami"   data-column="4" data-order="asc"><p align="center">jami</p></th>
+                </tr>
+              </thead>
+              <tbody id="my-tbody"></tbody>
+            </table>
+            <style>
+              #my-table2 tr td{
+/*                   max-width: 80px; */
+                padding: 0 6px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            </style>
+          </div>
+        </div>
+      </div>`
+
+    let myHtml = new DOMParser().parseFromString(html, "text/html")
+
+    let mydiv = myHtml.querySelector('div')
+
+    cont.appendChild(mydiv)
+
+    myOpen2(document.querySelector("#my-table2").querySelector('#my-tbody'))
   }
 }
 
@@ -241,7 +367,7 @@ function myJq(){
         return sorter.comp(val);
       }
     };
-    
+
     function mySortFunc(elem) {
       console.log(elem);
       var sorted = sorter
@@ -274,8 +400,9 @@ function myJq(){
 
 window.onload = ()=>{
   console.log('boshlandi')
-  
-  view()
-  
+
+  topshriqlar()
+  ballar()
+
   console.log('tayyor')
 }
