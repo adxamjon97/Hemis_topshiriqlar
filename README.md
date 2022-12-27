@@ -62,7 +62,7 @@ function myOpen(obj){
                 let sana = sub_list[j].children[0]
                 let check = sub_list[j+1].children[0]
                 // 1 || ni olib tashlasa faqat ochiqlari ko'rinadi
-                if(1 || sana.className=="bg-green" && !check.className.includes("fa-check")) {
+                if(sana.className=="bg-green" && !check.className.includes("fa-check")) {
                   let fan = ""
                   let nomi = ""
                   let href = ""
