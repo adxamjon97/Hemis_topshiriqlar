@@ -9,6 +9,46 @@
 // email: adxamjon97@umail.uz
 // tg: @Great_Master0
 
+
+console.log('hello')
+
+
+function prep(){
+  if('https://student.jbnuu.uz/'==document.URL){
+    console.log('ishladi')
+
+    let cont = document
+        .querySelector('#attendance-grid')
+        .children[1]
+        .querySelector(".col")
+
+
+    let html = `
+      <div class="box box-default">
+        <div class="box-header bg-gray">
+          <h3 class="box-title">Script manager</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="forscript" class="box-body homelinks">
+          <div class="row"></div>
+        </div>
+      </div>`
+
+    let myHtml = new DOMParser().parseFromString(html, "text/html")
+
+    let mydiv = myHtml.querySelector('div')
+
+    cont.prepend(mydiv)
+  }
+}
+
+
 var myCounter = 0
 
 function myOpen(obj){
@@ -84,57 +124,61 @@ function myOpen(obj){
 
 function topshriqlar(){
   if('https://student.jbnuu.uz/'==document.URL){
-    console.log('ishladi')
+    console.log('ishladi topshiriqlar')
 
-    let cont = document
-      .querySelector('#attendance-grid')
-      .children[1]
-      .querySelector('.col-md-12')
-      .querySelector('.row')
-      .querySelector('.col-md-5')
+    let cont = document.querySelector("#forscript")
 
+    // console.log(cont)
     let html = `
-      <div class="box box-widget">
-        <div class="box-header with-border">
-          <h3 class="box-title">Topshiriqlar</h3>
-        </div>
+      <div class="row">
+        <div class="col" style="margin-left: 10px">
+          <br>
+          <table width="100%" id="my-table" border="1">
+            <thead>
+              <tr>
+                <th data-key="id"    data-column="0" data-order="asc"><p align="center">id</p></th>
+                <th data-key="date"  data-column="1" data-order="asc" id="my-date1"><p align="center">date</p></th>
+                <th data-key="fan"   data-column="2" data-order="asc"><p align="center">fan</p></th>
+                <th data-key="modul" data-column="3" data-order="asc"><p align="center">topshiriq</p></th>
+              </tr>
+            </thead>
+            <tbody id="my-tbody"></tbody>
 
-        <div class="box-footer box-comments">
-          <div class="box-comment" id="Eslatma">
-            <table width="100%" id="my-table" border="1">
-              <thead >
-                <tr>
-                  <th data-key="id"    data-column="0" data-order="asc"><p align="center">id</p></th>
-                  <th data-key="date"  data-column="1" data-order="asc" id="my-date1"><p align="center">date</p></th>
-                  <th data-key="fan"   data-column="2" data-order="asc"><p align="center">fan</p></th>
-                  <th data-key="modul" data-column="3" data-order="asc"><p align="center">topshiriq</p></th>
-                </tr>
-              </thead>
-              <tbody id="my-tbody"></tbody>
-              <style>
-                #my-table tr td{
-/*                   max-width: 80px; */
-                  padding: 0 6px;
-                  white-space: nowrap;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                }
-              </style>
-            </table>
-          </div>
+<!--             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+                    integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+                    crossorigin="anonymous"
+                    referrerpolicy="no-referrer"></script> -->
+
+            <style>
+              #my-table tr td{
+                padding: 0 6px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            </style>
+          </table>
         </div>
       </div>`
-    myJq()
+    // console.log(html)
 
     let myHtml = new DOMParser().parseFromString(html, "text/html")
 
     let mydiv = myHtml.querySelector('div')
-
+    // console.log(myHtml)
     cont.appendChild(mydiv)
+    // console.log(jQuery)
+    // console.log($)
+
 
     myOpen(document.querySelector("#my-table").querySelector('#my-tbody'))
   }
 }
+
+
+// ===============================================================================
+// ballarni kurish
+// ===============================================================================
 
 function myOpen2(obj){
   function surov(url){
@@ -232,43 +276,31 @@ function ballar(){
   if('https://student.jbnuu.uz/'==document.URL){
     console.log('ishladi')
 
-    let cont = document
-      .querySelector('#attendance-grid')
-      .children[1]
-      .querySelector('.col-md-12')
-      .querySelector('.row')
-      .querySelector('.col-md-5')
+    let cont = document.querySelector('#forscript')
 
     let html = `
-      <div class="box box-widget">
-        <div class="box-header with-border">
-          <h3 class="box-title">Ballar</h3>
-        </div>
-
-        <div class="box-footer box-comments">
-          <div class="box-comment" id="Eslatma">
-            <table width="100%" id="my-table2" border="1">
-              <thead >
-                <tr>
-                  <th data-key="id"     data-column="0" data-order="asc"><p align="center">id</p></th>
-                  <th data-key="fan"    data-column="1" data-order="asc"><p align="center">fan</p></th>
-                  <th data-key="amaliy" data-column="2" data-order="asc"><p align="center">amaliy</p></th>
-                  <th data-key="maruza" data-column="3" data-order="asc"><p align="center">maruza</p></th>
-                  <th data-key="Jami"   data-column="4" data-order="asc"><p align="center">jami</p></th>
-                </tr>
-              </thead>
-              <tbody id="my-tbody"></tbody>
-            </table>
-            <style>
-              #my-table2 tr td{
-/*                   max-width: 80px; */
-                padding: 0 6px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              }
-            </style>
-          </div>
+      <div class="row" id="Eslatma">
+        <div class="col" style="margin-left: 10px">
+          <table width="90%" id="my-table2" border="1">
+            <thead >
+              <tr>
+                <th data-key="id"     data-column="0" data-order="asc"><p align="center">id</p></th>
+                <th data-key="fan"    data-column="1" data-order="asc"><p align="center">fan</p></th>
+                <th data-key="amaliy" data-column="2" data-order="asc"><p align="center">amaliy</p></th>
+                <th data-key="maruza" data-column="3" data-order="asc"><p align="center">maruza</p></th>
+                <th data-key="Jami"   data-column="4" data-order="asc"><p align="center">jami</p></th>
+              </tr>
+            </thead>
+            <tbody id="my-tbody"></tbody>
+          </table>
+          <style>
+            #my-table2 tr td{
+              padding: 0 6px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          </style>
         </div>
       </div>`
 
@@ -282,8 +314,10 @@ function ballar(){
   }
 }
 
-function myJq(){
+function myJq($){
   console.log('saralash qisim yuklandi')
+
+
   function getDate(str) {
     var ar = /(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2})/.exec(str);
 
@@ -295,6 +329,10 @@ function myJq(){
       +ar[5]
     );
   }
+  // console.log(getDate("22.04.2022 22:22"))
+
+  console.log("jquery bormi tekshirish")
+  console.log(jQuery)
 
   $(function () {
     var sorter = {
@@ -392,7 +430,6 @@ function myJq(){
     setTimeout(()=>{
       mySortFunc(document.querySelector("#my-date1"));
     },4000)
-    //alert();
   });
 }
 
@@ -401,8 +438,13 @@ function myJq(){
 window.onload = ()=>{
   console.log('boshlandi')
 
-  topshriqlar()
+  prep()
+
+
   ballar()
+  topshriqlar()
+
+  myJq(jQuery)
 
   console.log('tayyor')
 }
