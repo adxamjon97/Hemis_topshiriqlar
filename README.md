@@ -16,7 +16,7 @@ so'ngi versiyasida ballarni aniqlash qo'shilgan
 https://www.youtube.com/watch?v=kqfDIt-hvk4
 
 # code
-kodni faylda hamda shu yerda qistirib o'taman
+kodni script.js faylidan olasiz
 
 ```
 Dastur versiyasi 0.8.14.12 / Yadro 2.0.41.1 / Sana 07.01.2023 20:58:10 
