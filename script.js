@@ -100,7 +100,7 @@ function myOpen(obj){
                   tr.innerHTML = `
                     <td>${(myCounter++)}</td>
                     <td align="center">${sana.innerText}</td>
-                    <td style="max-width: 200px;">${fan}</td>
+                    <td style="max-width: 250px;">${fan}</td>
                     <td style="max-width: 200px;"><a href="${href}">${nomi}</a></td>`
                   obj.appendChild(tr)
                 }
@@ -126,14 +126,14 @@ function topshriqlar(){
   if('https://student.jbnuu.uz/'==document.URL){
     console.log('ishladi topshiriqlar')
 
-    let cont = document.querySelector("#forscript")
+    let cont = document.querySelector("#Eslatma > div")
 
     // console.log(cont)
     let html = `
-      <div class="row">
+      <!-- <div class="row">
         <div class="col" style="margin-left: 10px">
-          <br>
-          <table width="100%" id="my-table" border="1">
+          <br>-->
+          <table id="my-table" border="1" style="display: inline-block; vertical-align: top;">
             <thead>
               <tr>
                 <th data-key="id"    data-column="0" data-order="asc"><p align="center">id</p></th>
@@ -157,14 +157,15 @@ function topshriqlar(){
                 text-overflow: ellipsis;
               }
             </style>
-          </table>
+          </table> <!--
         </div>
-      </div>`
+      </div>-->
+    `
     // console.log(html)
 
     let myHtml = new DOMParser().parseFromString(html, "text/html")
 
-    let mydiv = myHtml.querySelector('div')
+    let mydiv = myHtml.querySelector('#my-table')
     // console.log(myHtml)
     cont.appendChild(mydiv)
     // console.log(jQuery)
@@ -281,7 +282,7 @@ function ballar(){
     let html = `
       <div class="row" id="Eslatma">
         <div class="col" style="margin-left: 10px">
-          <table width="90%" id="my-table2" border="1">
+          <table id="my-table2" border="1" style="display: inline-block; vertical-align: top;">
             <thead >
               <tr>
                 <th data-key="id"     data-column="0" data-order="asc"><p align="center">id</p></th>
