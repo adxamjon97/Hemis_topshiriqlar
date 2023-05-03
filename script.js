@@ -204,7 +204,9 @@ function myOpen2(obj){
           <td>${fan_nomi}</td>
           <td align="center">0.0/0</td>
           <td align="center">0.0/0</td>
-          <td align="center">0.0/0</td>`
+          <td align="center">0.0/0</td>
+          <td align="center">0%</td>
+        `
         // 2, 3, 4
         obj.appendChild(tr)
 
@@ -253,6 +255,8 @@ function myOpen2(obj){
 
                     let jami = tds[4].innerText.split("/")
                     tds[4].innerText = parseFloat(jami[0])+tuplagan+"/"+(parseInt(jami[1]) + kerek)
+
+                    tds[5].innerText = (parseFloat(jami[0])+tuplagan)*2+"%"
                   }
                 }
               }
@@ -290,6 +294,8 @@ function ballar(){
                 <th data-key="amaliy" data-column="2" data-order="asc"><p align="center">amaliy</p></th>
                 <th data-key="maruza" data-column="3" data-order="asc"><p align="center">maruza</p></th>
                 <th data-key="Jami"   data-column="4" data-order="asc"><p align="center">jami</p></th>
+
+                <th data-key="foiz"   data-column="5" data-order="asc"><p align="center">foiz</p></th>
               </tr>
             </thead>
             <tbody id="my-tbody"></tbody>
