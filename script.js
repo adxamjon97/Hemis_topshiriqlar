@@ -256,7 +256,17 @@ function myOpen2(obj){
                     let jami = tds[4].innerText.split("/")
                     tds[4].innerText = parseFloat(jami[0])+tuplagan+"/"+(parseInt(jami[1]) + kerek)
 
-                    tds[5].innerText = (parseFloat(jami[0])+tuplagan)*2+"%"
+                    let proc=(parseFloat(jami[0])+tuplagan)*2
+
+                    tds[5].innerText = proc+"%"
+
+                    let color = ""
+                    if(proc<60)      color = "rgba(255,   0,   0, 0.5)"
+                    else if(proc<75) color = "rgba(255, 255,   0, 0.5)"
+                    else if(proc<90) color = "rgba(  0,   0, 255, 0.5)"
+                    else             color = "rgba(  0, 255,   0, 0.5)"
+
+                    tds[5].style.backgroundColor = color
                   }
                 }
               }
