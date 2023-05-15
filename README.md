@@ -7,8 +7,7 @@ bu plugin script manager bo'lib foydalanuvchi tamonidan turlihil scriptlarni baj
 
 so'ngi versiyasida ballarni aniqlash qo'shilgan
 
-![изображение](https://user-images.githubusercontent.com/33910784/225541596-0f4b4dc0-e3de-4771-b337-6986767e1cce.png)
-
+![Uploading изображение.png…]()
 
 # video qo'llanma
 
