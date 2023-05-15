@@ -202,9 +202,9 @@ function myOpen2(obj){
         tr.innerHTML = `
           <td>${(cc++)}</td>
           <td>${fan_nomi}</td>
-          <td align="center">0.0/0</td>
-          <td align="center">0.0/0</td>
-          <td align="center">0.0/0</td>
+          <td align="center">0/0</td>
+          <td align="center">0/0</td>
+          <td align="center">0/0</td>
           <td align="center">0%</td>
         `
         // 2, 3, 4
@@ -247,14 +247,14 @@ function myOpen2(obj){
                     let tds = tr.children
                     if(title.includes("Amaliy") || title.includes("Seminar")){
                       let amaliy = tds[2].innerText.split("/")
-                      tds[2].innerText = parseFloat(amaliy[0])+tuplagan+"/"+(parseInt(amaliy[1]) + kerek)
+                      tds[2].innerText = (parseFloat(amaliy[0])+tuplagan).toFixed(1).toString().replace(".0","")+"/"+(parseInt(amaliy[1]) + kerek)
                     }else if(title.includes("Ma’ruza")){
                       let maruza = tds[3].innerText.split("/")
-                      tds[3].innerText = parseFloat(maruza[0])+tuplagan+"/"+(parseInt(maruza[1]) + kerek)
+                      tds[3].innerText = (parseFloat(maruza[0])+tuplagan).toFixed(1).toString().replace(".0","")+"/"+(parseInt(maruza[1]) + kerek)
                     }
 
                     let jami = tds[4].innerText.split("/")
-                    tds[4].innerText = parseFloat(jami[0])+tuplagan+"/"+(parseInt(jami[1]) + kerek)
+                    tds[4].innerText = (parseFloat(jami[0])+tuplagan).toFixed(1).toString().replace(".0","")+"/"+(parseInt(jami[1]) + kerek)
 
                     let proc=(parseFloat(jami[0])+tuplagan)*2
 
@@ -262,7 +262,7 @@ function myOpen2(obj){
 
                     let color = ""
                     if(proc<60)      color = "rgba(255,   0,   0, 0.5)"
-                    else if(proc<75) color = "rgba(255, 255,   0, 0.5)"
+                    else if(proc<70) color = "rgba(255, 255,   0, 0.5)"
                     else if(proc<90) color = "rgba(  0,   0, 255, 0.5)"
                     else             color = "rgba(  0, 255,   0, 0.5)"
 
