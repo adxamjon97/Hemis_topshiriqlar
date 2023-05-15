@@ -7,7 +7,7 @@ bu plugin script manager bo'lib foydalanuvchi tamonidan turlihil scriptlarni baj
 
 so'ngi versiyasida ballarni aniqlash qo'shilgan
 
-![Uploading изображение.png…]()
+![изображение](https://github.com/adxamjon97/Hemis_topshiriqlar/assets/33910784/6379a3ac-a634-455f-b698-eaa22b5a4976)
 
 # video qo'llanma
 
