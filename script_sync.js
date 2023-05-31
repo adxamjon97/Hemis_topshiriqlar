@@ -256,8 +256,8 @@ function myOpen2(obj){
                     let color = ""
                     if(proc<60)      color = "rgba(255,   0,   0, 0.5)" // red
                     else if(proc<70) color = "rgba(255, 255,   0, 0.5)" // yellow
-                    else if(proc<90) color = "rgba(  0,   0, 255, 0.5)" // green
-                    else             color = "rgba( 23, 217, 235, 0.5)" // cyan
+                    else if(proc<90) color = "rgba( 23, 217, 235, 0.5)" // cyan
+                    else             color = "rgba(  0, 255,   0, 0.5)" // green
 
                     tds[5].style.backgroundColor = color
                   }
