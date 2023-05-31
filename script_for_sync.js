@@ -445,7 +445,6 @@ function myJq($){
 
 
 
-//window.onload = ()=>{
   console.log('boshlandi')
 
   prep()
@@ -457,4 +456,3 @@ function myJq($){
   myJq(jQuery)
 
   console.log('tayyor')
-//}
