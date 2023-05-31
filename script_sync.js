@@ -91,7 +91,7 @@ function myOpen(obj){
 
                   let tr = document.createElement('tr')
                   tr.innerHTML = `
-                    <td>${(myCounter++)}</td>
+                    <td>${(++myCounter)}</td>
                     <td align="center">${sana.innerText}</td>
                     <td style="max-width: 250px;">${fan}</td>
                     <td style="max-width: 200px;"><a href="${href}">${nomi}</a></td>`
@@ -129,10 +129,10 @@ function topshriqlar(){
           <table id="my-table" border="1" style="display: inline-block; vertical-align: top;">
             <thead>
               <tr>
-                <th data-key="id"    data-column="0" data-order="asc"><p align="center">id</p></th>
-                <th data-key="date"  data-column="1" data-order="asc" id="my-date1"><p align="center">date</p></th>
-                <th data-key="fan"   data-column="2" data-order="asc"><p align="center">fan</p></th>
-                <th data-key="modul" data-column="3" data-order="asc"><p align="center">topshiriq</p></th>
+                <th data-key="id"    data-column="0" data-order="asc"><p align="center">N</p></th>
+                <th data-key="date"  data-column="1" data-order="asc" id="my-date1"><p align="center">Vaqt</p></th>
+                <th data-key="fan"   data-column="2" data-order="asc"><p align="center">Fan</p></th>
+                <th data-key="modul" data-column="3" data-order="asc"><p align="center">Topshiriq</p></th>
               </tr>
             </thead>
             <tbody id="my-tbody"></tbody>
@@ -193,7 +193,7 @@ function myOpen2(obj){
         let tr = document.createElement('tr')
 
         tr.innerHTML = `
-          <td>${(cc++)}</td>
+          <td>${(++cc)}</td>
           <td>${fan_nomi}</td>
           <td align="center">0/0</td>
           <td align="center">0/0</td>
@@ -292,13 +292,13 @@ function ballar(){
           <table id="my-table2" border="1" style="display: inline-block; vertical-align: top;">
             <thead >
               <tr>
-                <th data-key="id"     data-column="0" data-order="asc"><p align="center">id</p></th>
-                <th data-key="fan"    data-column="1" data-order="asc"><p align="center">fan</p></th>
-                <th data-key="amaliy" data-column="2" data-order="asc"><p align="center">amaliy</p></th>
-                <th data-key="maruza" data-column="3" data-order="asc"><p align="center">maruza</p></th>
-                <th data-key="Jami"   data-column="4" data-order="asc"><p align="center">jami</p></th>
+                <th data-key="id"     data-column="0" data-order="asc"><p align="center">N</p></th>
+                <th data-key="fan"    data-column="1" data-order="asc"><p align="center">Fan</p></th>
+                <th data-key="amaliy" data-column="2" data-order="asc"><p align="center">Amaliy</p></th>
+                <th data-key="maruza" data-column="3" data-order="asc"><p align="center">Maruza</p></th>
+                <th data-key="Jami"   data-column="4" data-order="asc"><p align="center">Jami</p></th>
 
-                <th data-key="foiz"   data-column="5" data-order="asc"><p align="center">foiz</p></th>
+                <th data-key="foiz"   data-column="5" data-order="asc"><p align="center">Foiz</p></th>
               </tr>
             </thead>
             <tbody id="my-tbody"></tbody>
