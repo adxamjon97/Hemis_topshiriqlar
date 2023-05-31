@@ -14,7 +14,24 @@ so'ngi versiyasida ballarni aniqlash qo'shilgan
 https://www.youtube.com/watch?v=kqfDIt-hvk4
 
 # code
-kodni script.js faylidan olasiz
+
+```js
+// ==UserScript==
+// @name        hemis_universitet_sync
+// @namespace   Violentmonkey Scripts
+// @match       https://student.jbnuu.uz/*
+// @grant       none
+// @version     2.0
+// @author      Adxamjon Nizametdinov
+// @description 31.05.2023, 09:59:44
+// ==/UserScript==
+
+if('https://student.jbnuu.uz/'==document.URL){
+  fetch("https://raw.githubusercontent.com/adxamjon97/Hemis_topshiriqlar/main/script_sync.js")
+    .then(r => r.text())
+    .then(d => eval(d))
+}
+```
 
 ```
 Dastur versiyasi 0.8.14.12 / Yadro 2.0.41.1 / Sana 07.01.2023 20:58:10 
