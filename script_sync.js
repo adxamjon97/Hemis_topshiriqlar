@@ -3,7 +3,7 @@
 // tg: @Great_Master0
 
 
-console.log('hello')
+console.log('version 2')
 
 
 function prep(){
