@@ -10,91 +10,102 @@ function prep(){
   if('https://student.jbnuu.uz/'==document.URL){
     console.log('ishladi')
 
-    let cont = document
-        .querySelector('#attendance-grid')
-        .children[1]
-        .querySelector(".col")
-
-
-    let html = `
+    $('#attendance-grid > :nth-child(2) .col').prepend(`
       <div class="box box-default">
         <div class="box-header bg-gray">
           <h3 class="box-title">Script manager</h3>
-
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
               <i class="fa fa-minus"></i>
             </button>
           </div>
         </div>
-
         <div id="forscript" class="box-body homelinks">
-          <div class="row"></div>
+          <div></div>
+          <h6>
+            Takliflar uchun muharir Telegrami:
+            <a href="https://t.me/Great_Master0" target="_blank">
+              Adxamjon Nizametdinov
+            </a>
+          </h6>
         </div>
-      </div>`
-
-    let myHtml = new DOMParser().parseFromString(html, "text/html")
-
-    let mydiv = myHtml.querySelector('div')
-
-    cont.prepend(mydiv)
+      </div>
+    `)
   }
 }
 
 
 var myCounter = 0
 
+// yopladigan fanlar parseri
 function myOpen(obj){
   function surov(url){
     let result=0
 
+    // fanlarni ichiga kirish
     fetch(url).then(function (response) {
       return response.text();
     }).then(function (html) {
       let doc = new DOMParser().parseFromString(html, "text/html")
-
-      let cont = doc.body.querySelector('#attendance-grid').children[1].children
+      let cont = doc.querySelectorAll('body #attendance-grid > :nth-child(2) > *')
 
       let cc=0
       for(let i of cont){
-        let sub_url = i.querySelector('.nav').children[1].children[0].href
+        let sub_url = i.querySelector('.nav > :nth-child(2) > :first-child').href
 
+        // topshiriqlar ichiga kirish
         fetch(sub_url).then(function (response) {
             return response.text();
         }).then(function (html) {
-
             let sub_doc = new DOMParser().parseFromString(html, "text/html")
             let sub_cont = sub_doc.body.querySelector('#attendance-grid').children[1]
+
             let list = sub_cont.querySelector('.col-md-8').children[0].querySelectorAll('.panel')
 
             for(let i of list){
               let sub_list = i.querySelector('.timeline').children
 
               for(let j=0; j<sub_list.length-1; j+=2){
-                let sana = sub_list[j].children[0]
-                let check = sub_list[j+1].children[0]
+                let sana  = sub_list[j  ].children[0] // sanasi
+                let check = sub_list[j+1].children[0] // yoplganligi
+
                 // 1 || ni olib tashlasa faqat ochiqlari ko'rinadi
                 if(sana.className=="bg-green" && !check.className.includes("fa-check")) {
-                  let fan = ""
-                  let nomi = ""
-                  let href = ""
-
-                  fan  = sub_list[j+1].querySelector('.timeline-body').innerText.split('\n')[1]
+                  // fan nomi
+                  let fan  = sub_list[j+1].querySelector('.timeline-body').innerText.split('\n')[1]
                   fan = fan.trim().split(" ")
                   fan.shift()
                   fan = fan.join(" ")
 
-                  nomi = sub_list[j+1].querySelector('.timeline-body').children[0].innerText
+                  // topshiriq nomi
+                  let nomi = sub_list[j+1].querySelector('.timeline-body > :first-child')
+                  let nomi_text = nomi.innerText
+
+                  // topshiriqga kirish havolasi
+                  let href_text = ""
                   try{
-                    href = sub_list[j+1].querySelector('.text-right').children[0].href
+                    let href = sub_list[j+1].querySelector('.text-right > :first-child')
+                    href_text = href.href
                   }catch{}
 
+                  let fayl_href = ""
+                  let fayl_text = ""
+                  try{
+                    let fayl = sub_list[j+1].querySelector(".download-item")
+                    fayl_href = fayl.href
+                    fayl_text = fayl.innerText
+                  }catch{}
+
+                  // har bir topshiriqning jadvalga joylash uchun satri
                   let tr = document.createElement('tr')
+
                   tr.innerHTML = `
-                    <td>${(++myCounter)}</td>
+                    <td>${(myCounter++)}</td>
                     <td align="center">${sana.innerText}</td>
                     <td style="max-width: 250px;">${fan}</td>
-                    <td style="max-width: 200px;"><a href="${href}">${nomi}</a></td>`
+                    <td style="max-width: 200px;"><a href="${href_text}">${nomi_text}</a></td>
+                    <td style="max-width: 200px;"><a href="${fayl_href}">${fayl_text}</a></td>
+                  `
                   obj.appendChild(tr)
                 }
               }
@@ -117,52 +128,36 @@ function myOpen(obj){
 
 function topshriqlar(){
   if('https://student.jbnuu.uz/'==document.URL){
-    console.log('ishladi topshiriqlar')
+    console.log("ishladi topshiriqlar")
 
-    let cont = document.querySelector("#Eslatma > div")
+    $('#Eslatma > div').prepend(`
+      <!-- <hr/> -->
+      <table
+         id="my-table"
+         class="table table-striped" style="display: inline-block; vertical-align: top;">
+        <thead>
+          <tr>
+            <th               data-key="id"    data-column="0" data-order="asc"><p align="center">id</p></th>
+            <th id="my-date1" data-key="date"  data-column="1" data-order="asc"><p align="center">date</p></th>
+            <th               data-key="fan"   data-column="2" data-order="asc"><p align="center">fan</p></th>
+            <th               data-key="modul" data-column="3" data-order="asc"><p align="center">topshiriq</p></th>
+            <th               data-key="file"  data-column="4" data-order="asc"><p align="center">fayl</p></th>
+          </tr>
+        </thead>
 
-    // console.log(cont)
-    let html = `
-      <!-- <div class="row">
-        <div class="col" style="margin-left: 10px">
-          <br>-->
-          <table id="my-table" border="1" style="display: inline-block; vertical-align: top;">
-            <thead>
-              <tr>
-                <th data-key="id"    data-column="0" data-order="asc"><p align="center">N</p></th>
-                <th data-key="date"  data-column="1" data-order="asc" id="my-date1"><p align="center">Vaqt</p></th>
-                <th data-key="fan"   data-column="2" data-order="asc"><p align="center">Fan</p></th>
-                <th data-key="modul" data-column="3" data-order="asc"><p align="center">Topshiriq</p></th>
-              </tr>
-            </thead>
-            <tbody id="my-tbody"></tbody>
+        <tbody id="my-tbody"></tbody>
 
-<!--             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
-                    integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
-                    crossorigin="anonymous"
-                    referrerpolicy="no-referrer"></script> -->
-
-            <style>
-              #my-table tr td{
-                padding: 0 6px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              }
-            </style>
-          </table> <!--
-        </div>
-      </div>-->
-    `
-    // console.log(html)
-
-    let myHtml = new DOMParser().parseFromString(html, "text/html")
-
-    let mydiv = myHtml.querySelector('#my-table')
-    // console.log(myHtml)
-    cont.appendChild(mydiv)
-    // console.log(jQuery)
-    // console.log($)
+        <style>
+          #my-table tr td{
+            padding: 0 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+          }
+        </style>
+      </table>
+    `)
 
 
     myOpen(document.querySelector("#my-table").querySelector('#my-tbody'))
@@ -193,7 +188,7 @@ function myOpen2(obj){
         let tr = document.createElement('tr')
 
         tr.innerHTML = `
-          <td>${(++cc)}</td>
+          <td>${(cc++)}</td>
           <td>${fan_nomi}</td>
           <td align="center">0/0</td>
           <td align="center">0/0</td>
@@ -210,56 +205,95 @@ function myOpen2(obj){
 
             let sub_doc = new DOMParser().parseFromString(html, "text/html")
             let sub_cont = sub_doc.body.querySelector('#attendance-grid').children[1]
-            let list = sub_cont.querySelector('.col-md-8').children[0].querySelectorAll('.panel')
+
+            let list = sub_cont.querySelectorAll('.col-md-8 > :first-child .panel')
 
             for(let i of list){
               let sub_list = i.querySelector('.timeline').children
 
               for(let j=0; j<sub_list.length-1; j+=2){
-                let title = sub_list[j+1].querySelector(".timeline-header").innerText
-                let ball = sub_list[j+1].querySelector(".timeline-item").querySelector(".time").innerText.replace(/\s/gm, '')
 
-                let tuplagan = ball.split("/")[0]
+                // sarlovha
+                let title = sub_list[j+1].querySelector(".timeline-header")
+                let title_text = title.innerText
+
+                // ballar
+                let ball = sub_list[j+1].querySelector(".timeline-item .time")
+                let ball_text = ball.innerText
+                ball_text = ball_text.replace(/\s/gm, '')
+                ball_text = ball_text.split("/")
+
+                // to'plangan
+                let tuplagan = ball_text[0]
                 tuplagan = parseFloat(tuplagan)
 
-                let kerek = ball.split("/")[1]
-
+                // to'planishi kerek
+                let kerek = ball_text[1]
                 kerek = kerek.replace("/","")
                 kerek = kerek.replace(" ","")
                 kerek = parseInt(kerek)
 
-                let fan_nomi_ = sub_list[j+1].querySelector('.timeline-body').innerText.split('\n')[1]
+                // fan nomi
+                let fan_nomi_ = sub_list[j+1].querySelector('.timeline-body')
+                fan_nomi_ = fan_nomi_.innerText
+                fan_nomi_ = fan_nomi_.split('\n')[1]
                 fan_nomi_ = fan_nomi_.trim().split(" ")
                 fan_nomi_.shift()
                 fan_nomi_ = fan_nomi_.join(" ")
 
-                let fan_nomi__ = document.querySelector("#my-table2").querySelectorAll(`tr`)
+                let jadval_satrlari = document.querySelectorAll("#my-table2 tr")
 
-                for(let trs of fan_nomi__){
+                for(let trs of jadval_satrlari){
                   if(trs.children[1].innerText == fan_nomi_){
                     let tds = tr.children
-                    if(title.includes("Amaliy") || title.includes("Seminar")){
+
+                    // amaliy va seminarlarni husoblaydi
+                    if(title_text.includes("Amaliy") || title_text.includes("Seminar")){
                       let amaliy = tds[2].innerText.split("/")
-                      tds[2].innerText = (parseFloat(amaliy[0])+tuplagan).toFixed(1).toString().replace(".0","")+"/"+(parseInt(amaliy[1]) + kerek)
-                    }else if(title.includes("Ma’ruza")){
+
+                      let yigindi = parseFloat(amaliy[0])+tuplagan
+                      yigindi = yigindi.toFixed(1).toString().replace(".0","")
+
+                      let jami = parseInt(amaliy[1]) + kerek
+
+                      tds[2].innerText = yigindi+"/"+jami
+
+                    // maruzalarni husoblaydi
+                    }else if(title_text.includes("Ma’ruza")){
                       let maruza = tds[3].innerText.split("/")
-                      tds[3].innerText = (parseFloat(maruza[0])+tuplagan).toFixed(1).toString().replace(".0","")+"/"+(parseInt(maruza[1]) + kerek)
+
+                      let yigindi = parseFloat(maruza[0])+tuplagan
+                      yigindi = yigindi.toFixed(1).toString().replace(".0","")
+
+                      let jami = parseInt(maruza[1]) + kerek
+
+                      tds[3].innerText = yigindi + "/" + jami
                     }
 
-                    let jami = tds[4].innerText.split("/")
-                    tds[4].innerText = (parseFloat(jami[0])+tuplagan).toFixed(1).toString().replace(".0","")+"/"+(parseInt(jami[1]) + kerek)
+                    let jami_list = tds[4].innerText.split("/")
 
-                    let proc=(parseFloat(jami[0])+tuplagan)*2
+                    // jami to'plagan ball
+                    let yigindi = parseFloat(jami_list[0]) + tuplagan
+                    yigindi = yigindi.toFixed(1).toString().replace(".0","")
+
+                    // jami
+                    let jami = parseInt(jami_list[1]) + kerek
+                    tds[4].innerText = yigindi + "/" + jami
+
+                    // foizda husoblaydi
+                    let proc = parseFloat(jami_list[0])+tuplagan
+                    proc = proc*100/jami
 
                     tds[5].innerText = proc+"%"
 
+                    // rang beradi foizga qarab
                     let color = ""
-                    if(proc<60)      color = "rgba(255,   0,   0, 0.5)" // red
-                    else if(proc<70) color = "rgba(255, 255,   0, 0.5)" // yellow
-                    else if(proc<90) color = "rgba( 23, 217, 235, 0.5)" // cyan
-                    else             color = "rgba(  0, 255,   0, 0.5)" // green
+                    if(proc<60)      color = "danger"
+                    else if(proc<70) color = "warning"
+                    else if(proc<90) color = "info"
+                    else             color = "success"
 
-                    tds[5].style.backgroundColor = color
+                    trs.setAttribute("class", color)
                   }
                 }
               }
@@ -286,19 +320,19 @@ function ballar(){
 
     let cont = document.querySelector('#forscript')
 
-    let html = `
-      <div class="row" id="Eslatma">
-        <div class="col" style="margin-left: 10px">
-          <table id="my-table2" border="1" style="display: inline-block; vertical-align: top;">
+    $('#forscript').prepend(`
+      <div id="Eslatma">
+        <div style="margin-left: 10px;">
+          <table class="table table-striped" id="my-table2" style="display: inline-block; vertical-align: top;">
             <thead >
               <tr>
-                <th data-key="id"     data-column="0" data-order="asc"><p align="center">N</p></th>
-                <th data-key="fan"    data-column="1" data-order="asc"><p align="center">Fan</p></th>
-                <th data-key="amaliy" data-column="2" data-order="asc"><p align="center">Amaliy</p></th>
-                <th data-key="maruza" data-column="3" data-order="asc"><p align="center">Maruza</p></th>
-                <th data-key="Jami"   data-column="4" data-order="asc"><p align="center">Jami</p></th>
+                <th data-key="id"     data-column="0" data-order="asc"><p align="center">id</p></th>
+                <th data-key="fan"    data-column="1" data-order="asc"><p align="center">fan</p></th>
+                <th data-key="amaliy" data-column="2" data-order="asc"><p align="center">amaliy</p></th>
+                <th data-key="maruza" data-column="3" data-order="asc"><p align="center">maruza</p></th>
+                <th data-key="Jami"   data-column="4" data-order="asc"><p align="center">jami</p></th>
 
-                <th data-key="foiz"   data-column="5" data-order="asc"><p align="center">Foiz</p></th>
+                <th data-key="foiz"   data-column="5" data-order="asc"><p align="center">foiz</p></th>
               </tr>
             </thead>
             <tbody id="my-tbody"></tbody>
@@ -312,18 +346,14 @@ function ballar(){
             }
           </style>
         </div>
-      </div>`
-
-    let myHtml = new DOMParser().parseFromString(html, "text/html")
-
-    let mydiv = myHtml.querySelector('div')
-
-    cont.appendChild(mydiv)
+      </div>
+    `);
 
     myOpen2(document.querySelector("#my-table2").querySelector('#my-tbody'))
   }
 }
 
+// vaqt bo'yicha saralash funksiyasi
 function myJq($){
   console.log('saralash qisim yuklandi')
 
@@ -445,6 +475,7 @@ function myJq($){
 
 
 
+window.onload = ()=>{
   console.log('boshlandi')
 
   prep()
@@ -456,3 +487,4 @@ function myJq($){
   myJq(jQuery)
 
   console.log('tayyor')
+}
