@@ -3,7 +3,7 @@
 // tg: @Great_Master0
 
 
-console.log('version 2')
+console.log('hello')
 
 
 function prep(){
@@ -13,10 +13,10 @@ function prep(){
     $('#attendance-grid > :nth-child(2) .col').prepend(`
       <div class="box box-default">
         <div class="box-header bg-gray">
-          <h3 class="box-title">Script manager</h3>
+          <h3 class="box-title">Script manager <button id="border_toggle">border</button></h3>
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
-              <i class="fa fa-minus"></i>
+              <i class="fa fa-minus" onclick="$('#forscript').toggle()"></i>
             </button>
           </div>
         </div>
@@ -28,6 +28,43 @@ function prep(){
               Adxamjon Nizametdinov
             </a>
           </h6>
+          <style>
+            .myborder tr,
+            .myborder tr th,
+            .myborder tr td{
+              border: 1px solid black;
+            }
+          </style>
+
+          <script>
+            var isButtonActive = "true";
+
+            $("#my-table").ready(function() {
+              isButtonActive=localStorage.getItem("isButtonActive")==="true"
+
+              function updateButtonClass() {
+                  console.log("ir")
+                  if (isButtonActive) {
+                    console.log("lr")
+                      $("#my-table").addClass("myborder");
+                      $("#my-table2").addClass("myborder");
+                  } else {
+                    console.log("rr")
+                      $("#my-table").removeClass("myborder");
+                      $("#my-table2").removeClass("myborder");
+                  }
+              }
+
+              $("#border_toggle").click(function() {
+                  isButtonActive = !isButtonActive;
+
+                  localStorage.setItem("isButtonActive", isButtonActive);
+                  updateButtonClass();
+              });
+
+              updateButtonClass();
+            });
+          </script>
         </div>
       </div>
     `)
@@ -100,12 +137,19 @@ function myOpen(obj){
                   let tr = document.createElement('tr')
 
                   tr.innerHTML = `
-                    <td>${(myCounter++)}</td>
+                    <td>${myCounter}</td>
                     <td align="center">${sana.innerText}</td>
                     <td style="max-width: 250px;">${fan}</td>
                     <td style="max-width: 200px;"><a href="${href_text}">${nomi_text}</a></td>
-                    <td style="max-width: 200px;"><a href="${fayl_href}">${fayl_text}</a></td>
+                    <td style="max-width: 200px;">
+                      <a onclick="window.open('${fayl_href}', '_blank')">
+                        ${fayl_text}
+                      </a>
+                    </td>
                   `
+
+                  myCounter++
+
                   obj.appendChild(tr)
                 }
               }
@@ -157,6 +201,7 @@ function topshriqlar(){
           }
         </style>
       </table>
+      <hr/>
     `)
 
 
@@ -294,6 +339,14 @@ function myOpen2(obj){
                     else             color = "success"
 
                     trs.setAttribute("class", color)
+
+                    color = ""
+                    if(proc<60)      color = "rgba(255,   0,   0, 0.5)" // red
+                    else if(proc<70) color = "rgba(255, 255,   0, 0.5)" // yello
+                    else if(proc<90) color = "rgba(  0, 255, 255, 0.5)" // cyan
+                    else             color = "rgba(  0, 255,   0, 0.5)" // green
+
+                    tds[5].style.backgroundColor = color
                   }
                 }
               }
@@ -474,6 +527,7 @@ function myJq($){
 }
 
 
+
   console.log('boshlandi')
 
   prep()
@@ -485,4 +539,3 @@ function myJq($){
   myJq(jQuery)
 
   console.log('tayyor')
-
