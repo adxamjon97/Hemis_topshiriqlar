@@ -328,6 +328,7 @@ function myOpen2(obj){
                     // foizda husoblaydi
                     let proc = parseFloat(jami_list[0])+tuplagan
                     proc = proc*100/jami
+                    proc = proc.toFixed(1).toString().replace(".0","")
 
                     tds[5].innerText = proc+"%"
 
@@ -528,6 +529,7 @@ function myJq($){
 
 
 
+//window.onload = ()=>{
   console.log('boshlandi')
 
   prep()
@@ -539,3 +541,4 @@ function myJq($){
   myJq(jQuery)
 
   console.log('tayyor')
+//}
