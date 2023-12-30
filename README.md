@@ -7,7 +7,7 @@ bu plugin script manager bo'lib foydalanuvchi tamonidan turlihil scriptlarni baj
 
 so'ngi versiyasida ballarni aniqlash qo'shilgan
 
-![изображение](https://github.com/adxamjon97/Hemis_topshiriqlar/assets/33910784/6379a3ac-a634-455f-b698-eaa22b5a4976)
+![33](https://github.com/adxamjon97/Hemis_topshiriqlar/assets/33910784/a590532f-f4da-4eef-883a-c60a262adc5a)
 
 # video qo'llanma
 
@@ -32,7 +32,7 @@ fetch("https://raw.githubusercontent.com/adxamjon97/Hemis_topshiriqlar/main/scri
 ```
 
 ```
-Dastur versiyasi 0.8.14.12 / Yadro 2.0.41.1 / Sana 07.01.2023 20:58:10 
+Dastur versiyasi 0.8.19.1 / Yadro 2.0.41.1 / Sana 30.12.2023 16:55:45 
 ```
 
 hemisdagi o'zgarishdan sung yangilandi
