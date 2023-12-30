@@ -1,15 +1,19 @@
+// ==UserScript==
+// @name hemis_universitet
+// @namespace AceScript Scripts
+// @match https://student.*.uz/
+// @grant none
+// ==/UserScript==
+
 // author: Adxamjon Nizametdinov
 // email: adxamjon97@umail.uz
 // tg: @Great_Master0
 
+function main(){
+  const GLOBAL_DOMAIN = window.location.protocol + "//" + window.location.hostname
+  console.log("parsing quyidagi sayt uchun boshlandi: "+GLOBAL_DOMAIN)
 
-console.log('hello')
-
-
-function prep(){
-  if('https://student.jbnuu.uz/'==document.URL){
-    console.log('ishladi')
-
+  function prep(){
     $('#attendance-grid > :nth-child(2) .col').prepend(`
       <div class="box box-default">
         <div class="box-header bg-gray">
@@ -69,14 +73,12 @@ function prep(){
       </div>
     `)
   }
-}
 
+  var myCounter = 0
+  let url = GLOBAL_DOMAIN+'/education/subjects'
 
-var myCounter = 0
-
-// yopladigan fanlar parseri
-function myOpen(obj){
-  function surov(url){
+  // yopladigan fanlar parseri
+  function myOpen(obj){
     let result=0
 
     // fanlarni ichiga kirish
@@ -164,16 +166,7 @@ function myOpen(obj){
     })
   }
 
-  let url = 'https://student.jbnuu.uz/education/subjects'
-
-
-  surov(url)
-}
-
-function topshriqlar(){
-  if('https://student.jbnuu.uz/'==document.URL){
-    console.log("ishladi topshiriqlar")
-
+  function topshriqlar(){
     $('#Eslatma > div').prepend(`
       <!-- <hr/> -->
       <table
@@ -207,15 +200,13 @@ function topshriqlar(){
 
     myOpen(document.querySelector("#my-table").querySelector('#my-tbody'))
   }
-}
 
 
-// ===============================================================================
-// ballarni kurish
-// ===============================================================================
+  // ===============================================================================
+  // ballarni kurish
+  // ===============================================================================
 
-function myOpen2(obj){
-  function surov(url){
+  function myOpen2(obj){
     let result=0
 
     fetch(url).then(function (response) {
@@ -362,16 +353,7 @@ function myOpen2(obj){
     })
   }
 
-  let url = 'https://student.jbnuu.uz/education/subjects'
-
-
-  surov(url)
-}
-
-function ballar(){
-  if('https://student.jbnuu.uz/'==document.URL){
-    console.log('ishladi')
-
+  function ballar(){
     let cont = document.querySelector('#forscript')
 
     $('#forscript').prepend(`
@@ -405,132 +387,126 @@ function ballar(){
 
     myOpen2(document.querySelector("#my-table2").querySelector('#my-tbody'))
   }
-}
 
-// vaqt bo'yicha saralash funksiyasi
-function myJq($){
-  console.log('saralash qisim yuklandi')
+  // vaqt bo'yicha saralash funksiyasi
+  function myJq($){
+    console.log('saralash qisim yuklandi')
 
 
-  function getDate(str) {
-    var ar = /(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2})/.exec(str);
+    function getDate(str) {
+      var ar = /(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2})/.exec(str);
 
-    return new Date(
-      +ar[3],
-      +ar[2] - 1, // Careful, month starts at 0!
-      +ar[1],
-      +ar[4],
-      +ar[5]
-    );
-  }
-  // console.log(getDate("22.04.2022 22:22"))
-
-  console.log("jquery bormi tekshirish")
-  console.log(jQuery)
-
-  $(function () {
-    var sorter = {
-      order: [1, -1],
-      column: 0,
-      key: "id",
-
-      setOrder: function (k) {
-        this.order =
-          {
-            asc: [1, -1],
-            desc: [-1, 1]
-          }[k] || this.order;
-
-        return this;
-      },
-      setColumn: function (c) {
-        this.column = c || this.column;
-        return this;
-      },
-
-      setKey: function (k) {
-        this.key = k || this.key;
-        return this;
-      },
-
-      sort: function (els) {
-        var sortFunc = this.key;
-        return els.sort(this[sortFunc]);
-      },
-
-      getValue: function (a, b) {
-        return {
-          a: $(a)
-            .find("td:eq(" + sorter.column + ")")
-            .text(),
-          b: $(b)
-            .find("td:eq(" + sorter.column + ")")
-            .text()
-        };
-      },
-      comp: function (val) {
-        if (val.a == val.b) return 0;
-
-        return val.a > val.b ? sorter.order[0] : sorter.order[1];
-      },
-      id: function (a, b) {
-        var val = sorter.getValue(a, b);
-
-        val.a = parseInt(val.a, 10);
-        val.b = parseInt(val.b, 10);
-
-        return sorter.comp(val);
-      },
-
-      fan: function (a, b) {
-        var val = sorter.getValue(a, b);
-        return sorter.comp(val);
-      },
-      modul: function (a, b) {
-        var val = sorter.getValue(a, b);
-        return sorter.comp(val);
-      },
-      date: function (a, b) {
-        var val = sorter.getValue(a, b);
-
-        val.a = getDate(val.a);
-        val.b = getDate(val.b);
-
-        return sorter.comp(val);
-      }
-    };
-
-    function mySortFunc(elem) {
-      console.log(elem);
-      var sorted = sorter
-        .setOrder($(elem).attr("data-order"))
-        .setColumn($(elem).attr("data-column"))
-        .setKey($(elem).attr("data-key"))
-        .sort($("table#my-table tbody tr"));
-
-      $("table#my-table tbody").empty().append(sorted);
-      $("table#my-table thead th").not(elem).attr("data-order", "asc");
-
-      $(elem).attr(
-        "data-order",
-        $(elem).attr("data-order") == "asc" ? "desc" : "asc"
+      return new Date(
+        +ar[3],
+        +ar[2] - 1, // Careful, month starts at 0!
+        +ar[1],
+        +ar[4],
+        +ar[5]
       );
     }
+    // console.log(getDate("22.04.2022 22:22"))
 
-    $("table#my-table thead").on("click", "th", function () {
-      mySortFunc(this);
+    console.log("jquery bormi tekshirish")
+    console.log(jQuery)
+
+    $(function () {
+      var sorter = {
+        order: [1, -1],
+        column: 0,
+        key: "id",
+
+        setOrder: function (k) {
+          this.order =
+            {
+              asc: [1, -1],
+              desc: [-1, 1]
+            }[k] || this.order;
+
+          return this;
+        },
+        setColumn: function (c) {
+          this.column = c || this.column;
+          return this;
+        },
+
+        setKey: function (k) {
+          this.key = k || this.key;
+          return this;
+        },
+
+        sort: function (els) {
+          var sortFunc = this.key;
+          return els.sort(this[sortFunc]);
+        },
+
+        getValue: function (a, b) {
+          return {
+            a: $(a)
+              .find("td:eq(" + sorter.column + ")")
+              .text(),
+            b: $(b)
+              .find("td:eq(" + sorter.column + ")")
+              .text()
+          };
+        },
+        comp: function (val) {
+          if (val.a == val.b) return 0;
+
+          return val.a > val.b ? sorter.order[0] : sorter.order[1];
+        },
+        id: function (a, b) {
+          var val = sorter.getValue(a, b);
+
+          val.a = parseInt(val.a, 10);
+          val.b = parseInt(val.b, 10);
+
+          return sorter.comp(val);
+        },
+
+        fan: function (a, b) {
+          var val = sorter.getValue(a, b);
+          return sorter.comp(val);
+        },
+        modul: function (a, b) {
+          var val = sorter.getValue(a, b);
+          return sorter.comp(val);
+        },
+        date: function (a, b) {
+          var val = sorter.getValue(a, b);
+
+          val.a = getDate(val.a);
+          val.b = getDate(val.b);
+
+          return sorter.comp(val);
+        }
+      };
+
+      function mySortFunc(elem) {
+        console.log(elem);
+        var sorted = sorter
+          .setOrder($(elem).attr("data-order"))
+          .setColumn($(elem).attr("data-column"))
+          .setKey($(elem).attr("data-key"))
+          .sort($("table#my-table tbody tr"));
+
+        $("table#my-table tbody").empty().append(sorted);
+        $("table#my-table thead th").not(elem).attr("data-order", "asc");
+
+        $(elem).attr(
+          "data-order",
+          $(elem).attr("data-order") == "asc" ? "desc" : "asc"
+        );
+      }
+
+      $("table#my-table thead").on("click", "th", function () {
+        mySortFunc(this);
+      });
+
+      setTimeout(()=>{
+        mySortFunc(document.querySelector("#my-date1"));
+      },4000)
     });
-
-    setTimeout(()=>{
-      mySortFunc(document.querySelector("#my-date1"));
-    },4000)
-  });
-}
-
-
-
-//window.onload = ()=>{
-  console.log('boshlandi')
+  }
 
   prep()
 
@@ -541,4 +517,7 @@ function myJq($){
   myJq(jQuery)
 
   console.log('tayyor')
-//}
+}
+
+
+window.onload = ()=> main()
